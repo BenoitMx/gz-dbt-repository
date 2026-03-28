@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: gz_raw_data
-    database: my-greenweez-project
+    database: benoit-project-488815
     schema: gz_raw_data
     loader: bigquery
     description: raw data 
