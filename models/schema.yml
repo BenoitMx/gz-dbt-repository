@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: gz_raw_data
+    database: my-greenweez-project
+    schema: gz_raw_data
+    loader: bigquery
+    description: raw data 
+    tables:
+      - name: raw_gz_sales
+      - name: raw_gz_product
+      - name: raw_gz_ship
