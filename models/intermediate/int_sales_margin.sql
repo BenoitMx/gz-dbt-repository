@@ -13,11 +13,11 @@ products_id
 ,orders_id
 ,revenue
 ,quantity
-,quantity * purchase_price AS purchase_cost
+,(quantity * purchase_price) AS purchase_cost
 FROM subquery1
 )
 
 --margin = revenue - purchase_cost
 SELECT *
-,ROUND(revenue - purchase_cost),2 AS margin
+,ROUND(revenue - purchase_cost,2) AS margin
 FROM subquery2
