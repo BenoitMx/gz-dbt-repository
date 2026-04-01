@@ -1,0 +1,60 @@
+version: 2
+
+sources:
+  - name: gz_raw_data
+    database: benoit-project-488815
+    schema: gz_raw_data
+    loader: bigquery
+    description: raw data
+
+    tables:
+      - name: raw_gz_sales
+        identifier: raw_gz_sales
+        description: sales of Greenweez, one row per product_id found in each orders_id
+        config:
+          loaded_at_field: date_date
+          freshness:
+            warn_after: {count: 9090, period: day}
+        columns:
+          - name: date_date
+            description: date of purchase
+          - name: orders_id
+            description: id of the order
+          - name: pdt_id
+            description: id of the product
+          - name: revenue
+            description: revenue in dollars
+          - name: quantity
+            description: quantity in units
+
+      - name: raw_gz_product
+        identifier: raw_gz_product
+        description: list of Greenweez products, one row per product_id
+        columns:
+          - name: products_id
+            description: id of the product
+          - name: purchase_price
+            description: purchase price in dollars
+
+      - name: raw_gz_ship
+        identifier: raw_gz_ship
+        description: list of cost of shipping
+        columns:
+          - name: orders_id
+            description: if of the orders
+          - name: shipping_fee
+            description: fee of the shipping paid by the client
+          - name: logcost
+            description: logistic costs
+          - name: ship_cost
+            description: cost of shipping
+
+models:
+  - name: stg_gz_raw_data__raw_gz_sales
+    description: staging model for Greenweez sales
+    columns:
+      - name: primary_key
+        description: concatenation of orders_id and product_id
+        tests:
+          - unique
+          - not_null
